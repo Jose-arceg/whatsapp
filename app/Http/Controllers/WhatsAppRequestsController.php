@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request as GRequest;
 use Illuminate\Http\Request;
 
-class WhatsAppController extends Controller
+class WhatsAppRequestsController extends Controller
 {
     private $client;
     public function __construct()
@@ -25,6 +25,7 @@ class WhatsAppController extends Controller
 
     public function crearGrupo(Request $request)
     {
+        dd($request->numeros);
         $body = '
         {
             "nombre": ' . $request->nombre . ',
@@ -37,6 +38,7 @@ class WhatsAppController extends Controller
 
     public function agregarAGrupo(Request $request)
     {
+        dd($request);
         $body = '{
                     "groupid": ' . $request->grupo . ',
                     "numero": ' . $request->numero . '
@@ -48,6 +50,7 @@ class WhatsAppController extends Controller
 
     public function eliminarDeGrupo(Request $request)
     {
+        dd($request);
         $body = '{
                     "groupid": ' . $request->grupo . ',
                     "numero": ' . $request->numero . '
@@ -59,6 +62,7 @@ class WhatsAppController extends Controller
 
     public function mensajeAGrupo(Request $request)
     {
+        dd($request);
         $body = '{
             "groupid": ' . $request->grupo . ',
             "mensaje": ' . $request->mensaje . '
@@ -68,20 +72,9 @@ class WhatsAppController extends Controller
         echo $res->getBody();
     }
 
-    public function archivoAGrupo(Request $request)
-    {
-        $body = '{
-            "numero" : ' . $request->numero . ',
-            "url": ' . $request->url . ',
-            "textoimagen" : ' . $request->textoimagen . '
-        }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/enviar-archivo-chatId?token=' . env('WSP_API_TOKEN'), [], $body);
-        $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
-    }
-
     public function enviarMensaje(Request $request)
     {
+        dd($request);
         $body = '{
             "numero" : ' . $request->numero . ',
             "mensaje": ' . $request->mensaje . '
@@ -93,6 +86,7 @@ class WhatsAppController extends Controller
 
     public function enviarArchivo(Request $request)
     {
+        dd($request);
         $body = '{
             "numero" : ' . $request->numero . ',
             "url": ' . $request->url . '
@@ -104,6 +98,7 @@ class WhatsAppController extends Controller
 
     public function enviarImagen(Request $request)
     {
+        dd($request);
         $body = '{
             "numero" : ' . $request->numero . ',
             "url": ' . $request->url . ',
@@ -116,6 +111,7 @@ class WhatsAppController extends Controller
 
     public function enviarBotones(Request $request)
     {
+        dd($request);
         $body = '{
             "numero" : ' . $request->numero . ',
             "mensaje": "Estamos para ayudarte, ¿Con que departamento quieres contactar?",
@@ -141,6 +137,7 @@ class WhatsAppController extends Controller
 
     public function enviarUbicacion(Request $request)
     {
+        dd($request);
         $body = '{
                     "numero" : ' . $request->numero . ',
                     "direccion" : ' . $request->direccion . ',
@@ -162,6 +159,7 @@ class WhatsAppController extends Controller
 
     public function mensajeVariosContactos(Request $request)
     {
+        dd($request);
         $body = '{
         "numeros": ' . $request->nuneros . ',
         "mensaje" : ' . $request->mensaje . '

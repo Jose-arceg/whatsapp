@@ -1,54 +1,70 @@
 <?php
 
+use App\Http\Controllers\VistasController;
 use App\Http\Controllers\WhatsAppController;
-use App\Http\Controllers\WhatsAppControllerRequests;
+use App\Http\Controllers\WhatsAppRequestsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/obtenerGrupos', [WhatsAppController::class, 'obtenerGrupos']);
-Route::get('/obtenerGrupos', [WhatsAppControllerRequests::class, 'obtenerGrupos']);
+Route::get('/obtenerGruposRequest', [WhatsAppRequestsController::class, 'obtenerGrupos']);
 
 Route::post('/crearGrupo', [WhatsAppController::class, 'crearGrupo']);
-Route::post('/crearGrupo', [WhatsAppControllerRequests::class, 'crearGrupo']);
+Route::get('/crearGrupoRequest', [WhatsAppRequestsController::class, 'crearGrupo'])->name('crearGrupoRequest');
 
 Route::post('/agregarGrupo', [WhatsAppController::class, 'agregarGrupo']);
-Route::post('/agregarGrupo', [WhatsAppControllerRequests::class, 'agregarGrupo']);
+Route::post('/agregarGrupoRequest', [WhatsAppRequestsController::class, 'agregarGrupo'])->name('agregarAGrupoRequest');
 
 Route::post('/eliminarDeGrupo', [WhatsAppController::class, 'eliminarDeGrupo']);
-Route::post('/eliminarDeGrupo', [WhatsAppControllerRequests::class, 'eliminarDeGrupo']);
+Route::get('/eliminarDeGrupoRequest', [WhatsAppRequestsController::class, 'eliminarDeGrupo'])->name('eliminarDeGrupoRequest');
 
 Route::post('/mensajeAGrupo', [WhatsAppController::class, 'mensajeAGrupo']);
-Route::post('/mensajeAGrupo', [WhatsAppControllerRequests::class, 'mensajeAGrupo']);
-
-Route::post('/archivoAGrupo', [WhatsAppController::class, 'archivoAGrupo']);
-Route::post('/archivoAGrupo', [WhatsAppControllerRequests::class, 'archivoAGrupo']);
+Route::get('/mensajeAGrupoRequest', [WhatsAppRequestsController::class, 'mensajeAGrupo'])->name('enviarMensajeAGrupoRequest');
 
 Route::post('/enviarMensaje', [WhatsAppController::class, 'enviarMensaje']);
-Route::post('/enviarMensaje', [WhatsAppControllerRequests::class, 'enviarMensaje']);
+Route::get('/enviarMensajeRequest', [WhatsAppRequestsController::class, 'enviarMensaje'])->name('enviarMensajeRequest');
 
 Route::post('/enviarArchivo', [WhatsAppController::class, 'enviarArchivo']);
-Route::post('/enviarArchivo', [WhatsAppControllerRequests::class, 'enviarArchivo']);
+Route::get('/enviarArchivoRequest', [WhatsAppRequestsController::class, 'enviarArchivo'])->name('enviarArchivoRequest');
 
 Route::post('/enviarImagen', [WhatsAppController::class, 'enviarImagen']);
-Route::post('/enviarImagen', [WhatsAppControllerRequests::class, 'enviarImagen']);
+Route::get('/enviarImagenRequest', [WhatsAppRequestsController::class, 'enviarImagen'])->name('enviarImagenRequest');
 
 Route::post('/enviarBotones', [WhatsAppController::class, 'enviarBotones']);
-Route::post('/enviarBotones', [WhatsAppControllerRequests::class, 'enviarBotones']);
+Route::post('/enviarBotonesRequest', [WhatsAppRequestsController::class, 'enviarBotones'])->name('enviarBotonesRequest');
 
 Route::post('/enviarUbicacion', [WhatsAppController::class, 'enviarUbicacion']);
-Route::post('/enviarUbicacion', [WhatsAppControllerRequests::class, 'enviarUbicacion']);
+Route::get('/enviarUbicacionRequest', [WhatsAppRequestsController::class, 'enviarUbicacion'])->name('enviarUbicacionRequest');
 
 Route::get('/limpiarMensaajes', [WhatsAppController::class, 'limpiarMensaajes']);
-Route::get('/limpiarMensaajes', [WhatsAppControllerRequests::class, 'limpiarMensaajes']);
+Route::get('/limpiarMensaajesRequest', [WhatsAppRequestsController::class, 'limpiarMensaajes']);
 
 Route::post('/mensajeVariosContactos', [WhatsAppController::class, 'mensajeVariosContactos']);
-Route::post('/mensajeVariosContactos', [WhatsAppControllerRequests::class, 'mensajeVariosContactos']);
+Route::get('/mensajeVariosContactosRequest', [WhatsAppRequestsController::class, 'mensajeVariosContactos'])->name('enviarMensajeVariosContactosRequest');
 
 Route::get('/obtenerContactos', [WhatsAppController::class, 'obtenerContactos']);
-Route::get('/obtenerContactos', [WhatsAppControllerRequests::class, 'obtenerContactos']);
+Route::get('/obtenerContactosRequest', [WhatsAppRequestsController::class, 'obtenerContactos']);
 
 Route::get('/reiniciarInstancia', [WhatsAppController::class, 'reiniciarInstancia']);
-Route::get('/reiniciarInstancia', [WhatsAppControllerRequests::class, 'reiniciarInstancia']);
+Route::get('/reiniciarInstanciaRequest', [WhatsAppRequestsController::class, 'reiniciarInstancia']);
+
+##########################################################################################
+
+Route::get('/abrirEnviarMensaje', [VistasController::class, 'abrirEnviarMensaje'])->name('abrirEnviarMensaje');
+Route::get('/abrirCrearGrupo', [VistasController::class, 'abrirCrearGrupo'])->name('abrirCrearGrupo');
+Route::get('/abrirAgregarAGrupo', [VistasController::class, 'abrirAgregarAGrupo'])->name('abrirAgregarAGrupo');
+Route::get('/abrirEliminarDeGrupo', [VistasController::class, 'abrirEliminarDeGrupo'])->name('abrirEliminarDeGrupo');
+Route::get('/abrirEnviarMensajeAGrupo', [VistasController::class, 'abrirEnviarMensajeAGrupo'])->name('abrirEnviarMensajeAGrupo');
+Route::get('/abrirEnviarArchivo', [VistasController::class, 'abrirEnviarArchivo'])->name('abrirEnviarArchivo');
+Route::get('/abrirEnviarImagen', [VistasController::class, 'abrirEnviarImagen'])->name('abrirEnviarImagen');
+Route::get('/abrirEnviarBotones', [VistasController::class, 'abrirEnviarBotones'])->name('abrirEnviarBotones');
+Route::get('/abrirEnviarUbicacion', [VistasController::class, 'abrirEnviarUbicacion'])->name('abrirEnviarUbicacion');
+Route::get('/abrirEnviarMensajeVariosContactos', [VistasController::class, 'abrirEnviarMensajeVariosContactos'])->name('abrirEnviarMensajeVariosContactos');

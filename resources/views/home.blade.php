@@ -1,53 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-
-        <div class="parent">
-            <div class="izquierda">
-                <table>
-                    <thead>
-                        <tr>
-                            <th><a href="{{ route('') }}">{{ __('Ver contactos') }}</a></th>
-                        </tr>
-                        <tr>
-                            <th><a href="{{ route('abrirEnviarMensaje') }}">{{ __('Enviar Mensaje') }}</a></th>
-                        </tr>
-                        <tr>
-                            <th><a href="{{ route('abrirEnviarImagen') }}">{{ __('Enviar Imagen') }}</a></th>
-                        </tr>
-                        <tr>
-                            <th><a href="{{ route('abrirEnviarArchivo') }}">{{ __('Enviar Archivo') }}</a></th>
-                        </tr>
-                        <tr>
-                            <th><a href="{{ route('abrirCrearGrupo') }}">{{ __('Crear Grupo') }}</a></th>
-                        </tr>
-                        <tr>
-                            <th><a href="{{ route('') }}">{{ __('Ver Grupos') }}</a></th>
-                        </tr>
-                        <tr>
-                            <th><a href="{{ route('abrirAgregarAGrupo') }}">{{ __('Agregar a Grupo') }}</a></th>
-                        </tr>
-                        <tr>
-                            <th><a href="{{ route('abrirEliminarDeGrupo') }}">{{ __('Eliminar de Grupo') }}</a></th>
-                        </tr>
-                        <tr>
-                            <th><a href="{{ route('abrirEnviarMensajeAGrupo') }}">{{ __('Enviar mensaje a grupo') }}</a>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th><a
-                                    href="{{ route('abrirEnviarMensajeVariosContactos') }}">{{ __('Enviar mensaje a varios contactos') }}</a>
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-            <div class="derecha ">
-
-            </div>
+    <div class="parent">
+        <div class="izquierda">
+            @include('izquierda')
         </div>
-    @endsection
-    <style>
+        <div class="derecha">
 
+        </div>
+    </div>
+    <style>
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+        }
+
+        .izquierda {
+            grid-area: 2 / 2 / 8 / 4;
+        }
+
+        .derecha {
+            grid-area: 2 / 5 / 8 / 8;
+        }
     </style>
+@endsection

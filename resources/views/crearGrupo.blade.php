@@ -9,13 +9,33 @@
                 @csrf
                 <label for="nombre">{{ __('Nombre del grupo') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="nombre" id="nombre" class="form-control">
+                @error('nombre')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <label for="numeros">{{ __('Numeros que desea agregar al grupo') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="numeros[]" id="numeros"
-                    class="form-control">
+                    class="form-control @error('numeros') is-invalid @enderror">
+                @error('numeros')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <input style="width: 400px; margin-top: 10px" type="text" name="numeros[]" id="numeros"
-                    class="form-control">
+                    class="form-control @error('numeros') is-invalid @enderror">
+                @error('numeros')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <input style="width: 400px; margin-top: 10px" type="text" name="numeros[]" id="numeros"
-                    class="form-control">
+                    class="form-control @error('numeros') is-invalid @enderror">
+                @error('numeros')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <input style="width: 400px; margin-top: 10px" class="btn btn-success" type="submit" value="Crear Grupo">
             </form>
         </div>

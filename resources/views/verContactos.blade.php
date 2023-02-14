@@ -12,7 +12,7 @@
             <tbody>
                 <tr>
                     <td>
-                        {{ $request->numero }}
+                        {{ $contactos->numero }}
                     </td>
                 </tr>
             </tbody>

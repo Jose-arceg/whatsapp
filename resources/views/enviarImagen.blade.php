@@ -8,13 +8,29 @@
             <form action="{{ route('enviarImagenRequest') }}">
                 @csrf
                 <label for="numero">{{ __('Numero al que desea enviar la imagen') }}</label>
-                <input style="width: 400px; margin-top: 10px" type="text" name="numero" id="numero" class="form-control">
+                <input style="width: 400px; margin-top: 10px" type="text" name="numero" id="numero"
+                    class="form-control @error('numero') is-invalid @enderror">
+                @error('numero')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <label for="url">{{ __('Link de la imagen que desea enviar') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="url" id="url"
-                    class="form-control">
+                    class="form-control @error('url') is-invalid @enderror">
+                @error('url')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <label for="textoimagen">{{ __('Descripcion de la imagen') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="textoimagen" id="textoimagen"
-                    class="form-control">
+                    class="form-control @error('textoimagen') is-invalid @enderror">
+                @error('textoimagen')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <input style="width: 400px; margin-top: 10px" class="btn btn-success" type="submit" value="Enviar Imagen">
             </form>
         </div>

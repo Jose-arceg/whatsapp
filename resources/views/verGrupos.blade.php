@@ -12,7 +12,7 @@
             <tbody>
                 <tr>
                     <td>
-                        {{ $request->numero }}
+                        {{ $grupos->numero }}
                     </td>
                 </tr>
             </tbody>

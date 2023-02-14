@@ -213,6 +213,7 @@ class WhatsAppRequestsController extends Controller
         $grequest = new GRequest('GET', env('WSP_URL') . '/own/contactos?token=' . env('WSP_API_TOKEN'));
         $res = $this->client->sendAsync($grequest)->wait();
         $contactos = json_decode($res->getBody()->getContents());
+        dd($contactos);
         return view('verContactos')->with('contactos', $contactos);
     }
 

@@ -8,15 +8,25 @@
             <form action="{{ route('eliminarDeGrupoRequest') }}">
                 @csrf
                 <label for="grupo">{{ __('Grupo del cual desea eliminar un contacto') }}</label>
-                <input style="width: 400px; margin-top: 10px" type="text" name="grupo" id="grupo" class="form-control">
+                <input style="width: 400px; margin-top: 10px" type="text" name="grupo" id="grupo"
+                    class="form-control @error('grupo') is-invalid @enderror">
+                @error('grupo')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <label for="numero">{{ __('Numero que desea eliminar del grupo') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="numero" id="numero"
-                    class="form-control">
+                    class="form-control @error('numero') is-invalid @enderror">
+                @error('numero')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <input style="width: 400px; margin-top: 10px" class="btn btn-danger" type="submit"
                     value="Eliminar del Grupo">
             </form>
         </div>
-
     </div>
     <style>
         .parent {

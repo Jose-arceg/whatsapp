@@ -8,10 +8,21 @@
             <form action="{{ route('enviarMensajeAGrupoRequest') }}">
                 @csrf
                 <label for="grupo">{{ __('Grupo al que desea enviar el mensaje') }}</label>
-                <input style="width: 400px; margin-top: 10px" type="text" name="grupo" id="grupo" class="form-control">
+                <input style="width: 400px; margin-top: 10px" type="text" name="grupo" id="grupo"
+                    class="form-control @error('grupo') is-invalid @enderror">
+                @error('grupo')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <label for="mensaje">{{ __('Mensaje que desea enviar') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="mensaje" id="mensaje"
-                    class="form-control">
+                    class="form-control @error('mensaje') is-invalid @enderror">
+                @error('grupo')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 <input style="width: 400px; margin-top: 10px" class="btn btn-success" type="submit"
                     value="Enviar Mensaje al Grupo">
             </form>

@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
+use App\Http\Requests\agregarAGrupoRequest;
+use App\Http\Requests\crearGrupoRequest;
+use App\Http\Requests\eliminarDeGrupoRequest;
+use App\Http\Requests\enviarArchivoRequest;
+use App\Http\Requests\enviarImagenRequest;
+use App\Http\Requests\enviarMensajeAGrupoRequest;
+use App\Http\Requests\enviarMensajeRequest;
+use App\Http\Requests\enviarMensajeVariosContactosRequest;
 use GuzzleHttp\Psr7\Request as GRequest;
 use Illuminate\Http\Request;
 
@@ -17,13 +24,13 @@ class WhatsAppRequestsController extends Controller
 
     public function obtenerGrupos()
     {
-        $grequest = new GRequest('GET', '{{produccionserver}}/own/grupos?token=' . env('WSP_API_TOKEN'));
+        $grequest = new GRequest('GET', env('WSP_URL') . ' /own/grupos?token=' . env('WSP_API_TOKEN'));
         $res = $this->client->sendAsync($grequest)->wait();
-        $response = $res->getBody();
-        return view('')->with('response', $response);
+        $grupos = json_decode($res->getBody()->getContents());
+        return view('verGrupos')->with('grupos', $grupos);
     }
 
-    public function crearGrupo(Request $request)
+    public function crearGrupo(crearGrupoRequest $request)
     {
         dd($request->numeros);
         $body = '
@@ -31,72 +38,78 @@ class WhatsAppRequestsController extends Controller
             "nombre": ' . $request->nombre . ',
             "numeros": ' . $request->numeros . ',
         }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/crear-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/crear-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
-    public function agregarAGrupo(Request $request)
+    public function agregarAGrupo(agregarAGrupoRequest $request)
     {
         dd($request);
         $body = '{
                     "groupid": ' . $request->grupo . ',
                     "numero": ' . $request->numero . '
                 }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/agregar-a-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/agregar-a-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
-    public function eliminarDeGrupo(Request $request)
+    public function eliminarDeGrupo(eliminarDeGrupoRequest $request)
     {
         dd($request);
         $body = '{
                     "groupid": ' . $request->grupo . ',
                     "numero": ' . $request->numero . '
                 }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/eliminar-de-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/eliminar-de-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
-    public function mensajeAGrupo(Request $request)
+    public function mensajeAGrupo(enviarMensajeAGrupoRequest $request)
     {
         dd($request);
         $body = '{
             "groupid": ' . $request->grupo . ',
             "mensaje": ' . $request->mensaje . '
         }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/enviar-mensaje-chatId?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/enviar-mensaje-chatId?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
-    public function enviarMensaje(Request $request)
+    public function enviarMensaje(enviarMensajeRequest $request)
     {
         dd($request);
         $body = '{
             "numero" : ' . $request->numero . ',
             "mensaje": ' . $request->mensaje . '
         }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/enviar-mensaje?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/enviar-mensaje?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
-    public function enviarArchivo(Request $request)
+    public function enviarArchivo(enviarArchivoRequest $request)
     {
         dd($request);
         $body = '{
             "numero" : ' . $request->numero . ',
             "url": ' . $request->url . '
         }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/enviar-archivo?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/enviar-archivo?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
-    public function enviarImagen(Request $request)
+    public function enviarImagen(enviarImagenRequest $request)
     {
         dd($request);
         $body = '{
@@ -104,9 +117,10 @@ class WhatsAppRequestsController extends Controller
             "url": ' . $request->url . ',
             "textoimagen" : ' . $request->textoimagen . '
         }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/enviar-archivo?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/enviar-archivo?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function enviarBotones(Request $request)
@@ -130,9 +144,10 @@ class WhatsAppRequestsController extends Controller
             }
           ]
         }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/enviar-botones?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/enviar-botones?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function enviarUbicacion(Request $request)
@@ -144,29 +159,32 @@ class WhatsAppRequestsController extends Controller
                     "latitud": ' . $request->latitud . ',
                     "longitud": ' . $request->longitud . '
                 }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/enviar-ubicacion?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/enviar-ubicacion?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function limpiarMensajes()
     {
         $body = '';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/limpiar-mensajes?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/limpiar-mensajes?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
-    public function mensajeVariosContactos(Request $request)
+    public function mensajeVariosContactos(enviarMensajeVariosContactosRequest $request)
     {
         dd($request);
         $body = '{
         "numeros": ' . $request->nuneros . ',
         "mensaje" : ' . $request->mensaje . '
         }';
-        $grequest = new GRequest('POST', '{{produccionserver}}/own/enviar-mensaje-muchos-contactos?token=' . env('WSP_API_TOKEN'), [], $body);
+        $grequest = new GRequest('POST', env('WSP_URL') . '/own/enviar-mensaje-muchos-contactos?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
     /*
     public function muchosMensajesMuchosContactos(Request $request)
@@ -192,14 +210,15 @@ class WhatsAppRequestsController extends Controller
      */
     public function obtenerContactos()
     {
-        $grequest = new GRequest('GET', '{{produccionserver}}/own/contactos?token=' . env('WSP_API_TOKEN'));
+        $grequest = new GRequest('GET', env('WSP_URL') . '/own/contactos?token=' . env('WSP_API_TOKEN'));
         $res = $this->client->sendAsync($grequest)->wait();
-        echo $res->getBody();
+        $contactos = json_decode($res->getBody()->getContents());
+        return view('verContactos')->with('contactos', $contactos);
     }
 
     public function reiniciarInstancia()
     {
-        $grequest = new GRequest('GET', '{{produccionserver}}/own/reiniciar-instancia?token=' . env('WSP_API_TOKEN'));
+        $grequest = new GRequest('GET', env('WSP_URL') . '/own/reiniciar-instancia?token=' . env('WSP_API_TOKEN'));
         $res = $this->client->sendAsync($grequest)->wait();
         echo $res->getBody();
     }

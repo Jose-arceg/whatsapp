@@ -7,7 +7,9 @@
         <div class="derecha">
             <form action="{{ route('agregarAGrupoRequest') }}">
                 @csrf
+                <label for="grupo">{{ __('Grupo al que desea agregar') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="grupo" id="grupo" class="form-control">
+                <label for="numero">{{ __('Numero que desea agregar al grupo') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="numero" id="numero"
                     class="form-control">
                 <input style="width: 400px; margin-top: 10px" class="btn btn-success" type="submit"

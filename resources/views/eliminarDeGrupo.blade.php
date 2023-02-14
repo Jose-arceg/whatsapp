@@ -7,7 +7,9 @@
         <div class="derecha">
             <form action="{{ route('eliminarDeGrupoRequest') }}">
                 @csrf
+                <label for="grupo">{{ __('Grupo del cual desea eliminar un contacto') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="grupo" id="grupo" class="form-control">
+                <label for="numero">{{ __('Numero que desea eliminar del grupo') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="numero" id="numero"
                     class="form-control">
                 <input style="width: 400px; margin-top: 10px" class="btn btn-danger" type="submit"

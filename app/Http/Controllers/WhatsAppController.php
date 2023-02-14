@@ -16,10 +16,10 @@ class WhatsAppController extends Controller
 
     public function obtenerGrupos()
     {
-        $request = new Request('GET', '{{produccionserver}}/own/grupos?token=' . env('WSP_API_TOKEN'));
+        $request = new Request('GET', env('WSP_URL') . '/own/grupos?token=' . env('WSP_API_TOKEN'));
         $res = $this->client->sendAsync($request)->wait();
-        $response = $res->getBody();
-        return view('')->with('response', $response);
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function crearGrupo()
@@ -33,9 +33,10 @@ class WhatsAppController extends Controller
                             "5213344556699"
                         ]
         }';
-        $request = new Request('POST', '{{produccionserver}}/own/crear-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/crear-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function agregarAGrupo()
@@ -44,9 +45,10 @@ class WhatsAppController extends Controller
                     "groupid": "120363028469440899@g.us",
                     "numero": "5211122334455"
                 }';
-        $request = new Request('POST', '{{produccionserver}}/own/agregar-a-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/agregar-a-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function eliminarDeGrupo()
@@ -55,9 +57,10 @@ class WhatsAppController extends Controller
                     "groupid": "120363028469440899@g.us",
                     "numero": "5211122334455"
                 }';
-        $request = new Request('POST', '{{produccionserver}}/own/eliminar-de-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/eliminar-de-grupo?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function mensajeAGrupo()
@@ -66,9 +69,10 @@ class WhatsAppController extends Controller
             "numero" : "12345678@g.us",
             "mensaje": "Hola, como estan? prueba postman"
         }';
-        $request = new Request('POST', '{{produccionserver}}/own/enviar-mensaje-chatId?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/enviar-mensaje-chatId?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function archivoAGrupo()
@@ -78,9 +82,10 @@ class WhatsAppController extends Controller
             "url": "https://img.freepik.com/free-photo/woman-showing-whatsapp-messenger-icon_53876-41312.jpg",
             "textoimagen" : "Texto de la imagen"
         }';
-        $request = new Request('POST', '{{produccionserver}}/own/enviar-archivo-chatId?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/enviar-archivo-chatId?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function enviarMensaje()
@@ -89,9 +94,10 @@ class WhatsAppController extends Controller
             "numero" : "5213344556677",
             "mensaje": "Hola, como estas?"
         }';
-        $request = new Request('POST', '{{produccionserver}}/own/enviar-mensaje?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/enviar-mensaje?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function enviarArchivo()
@@ -100,9 +106,10 @@ class WhatsAppController extends Controller
             "numero" : "5213344556677",
             "url": "https://whatzmeapi.com/docs/WhatzMeApi-PreguntasFrecuentes.pdf"
         }';
-        $request = new Request('POST', '{{produccionserver}}/own/enviar-archivo?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/enviar-archivo?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function enviarImagen()
@@ -112,9 +119,10 @@ class WhatsAppController extends Controller
             "url": "http://valerik.com.mx/uploads/about_04.jpg",
             "textoimagen" : "Este texto puede ser largo con emojis 😃 solo aplica cuando envias imagenes."
         }';
-        $request = new Request('POST', '{{produccionserver}}/own/enviar-archivo?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/enviar-archivo?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function enviarBotones()
@@ -137,9 +145,10 @@ class WhatsAppController extends Controller
             }
           ]
         }';
-        $request = new Request('POST', '{{produccionserver}}/own/enviar-botones?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/enviar-botones?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function enviarUbicacion()
@@ -150,17 +159,19 @@ class WhatsAppController extends Controller
                     "latitud": "19.4193295",
                     "longitud": "-99.1020533"
                 }';
-        $request = new Request('POST', '{{produccionserver}}/own/enviar-ubicacion?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/enviar-ubicacion?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function limpiarMensajes()
     {
         $body = '';
-        $request = new Request('POST', '{{produccionserver}}/own/limpiar-mensajes?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/limpiar-mensajes?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function mensajeVariosContactos()
@@ -175,9 +186,10 @@ class WhatsAppController extends Controller
         "webhookUrl" : "URL Opcional para que te notifiquetemos por POST cuando termina el envio",
         "nombreCampania" : "Opcional si deseas que se registren los resultados de tu envio en el /dashboard"
         }';
-        $request = new Request('POST', '{{produccionserver}}/own/enviar-mensaje-muchos-contactos?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/enviar-mensaje-muchos-contactos?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
 
     }
 
@@ -197,22 +209,25 @@ class WhatsAppController extends Controller
                     "webhookUrl" : "URL Opcional para que te notifiquetemos por POST cuando termina el envio",
                     "nombreCampania" : "Opcional si deseas que se registren los resultados de tu envio en el /dashboard"
                 }';
-        $request = new Request('POST', '{{produccionserver}}/own/enviar-muchos-mensajes-muchos-contactos?token=' . env('WSP_API_TOKEN'), [], $body);
+        $request = new Request('POST', env('WSP_URL') . '/own/enviar-muchos-mensajes-muchos-contactos?token=' . env('WSP_API_TOKEN'), [], $body);
         $res = $client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function obtenerContactos()
     {
-        $request = new Request('GET', '{{produccionserver}}/own/contactos?token=' . env('WSP_API_TOKEN'));
+        $request = new Request('GET', env('WSP_URL') . '/own/contactos?token=' . env('WSP_API_TOKEN'));
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 
     public function reiniciarInstancia()
     {
-        $request = new Request('GET', '{{produccionserver}}/own/reiniciar-instancia?token=' . env('WSP_API_TOKEN'));
+        $request = new Request('GET', env('WSP_URL') . '/own/reiniciar-instancia?token=' . env('WSP_API_TOKEN'));
         $res = $this->client->sendAsync($request)->wait();
-        echo $res->getBody();
+        $response = json_decode($res->getBody()->getContents());
+        dd($response);
     }
 }

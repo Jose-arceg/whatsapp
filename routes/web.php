@@ -68,3 +68,5 @@ Route::get('/abrirEnviarImagen', [VistasController::class, 'abrirEnviarImagen'])
 Route::get('/abrirEnviarBotones', [VistasController::class, 'abrirEnviarBotones'])->name('abrirEnviarBotones');
 Route::get('/abrirEnviarUbicacion', [VistasController::class, 'abrirEnviarUbicacion'])->name('abrirEnviarUbicacion');
 Route::get('/abrirEnviarMensajeVariosContactos', [VistasController::class, 'abrirEnviarMensajeVariosContactos'])->name('abrirEnviarMensajeVariosContactos');
+Route::get('/abrirVerGrupos', [WhatsAppRequestsController::class, 'obtenerGrupos'])->name('abrirVerGrupos');
+Route::get('/abrirVerContactos', [WhatsAppRequestsController::class, 'obtenerContactos'])->name('abrirVerContactos');

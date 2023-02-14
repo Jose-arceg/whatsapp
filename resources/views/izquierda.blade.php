@@ -1,11 +1,9 @@
 <div>
     <table>
         <thead>
-            {{--
             <tr>
-                <th><a href="{{ route('') }}">{{ __('Ver contactos') }}</a></th>
+                <th><a href="{{ route('abrirVerContactos') }}">{{ __('Ver contactos') }}</a></th>
             </tr>
-            --}}
             <tr>
                 <th><a href="{{ route('abrirEnviarMensaje') }}">{{ __('Enviar Mensaje') }}</a></th>
             </tr>
@@ -18,11 +16,9 @@
             <tr>
                 <th><a href="{{ route('abrirCrearGrupo') }}">{{ __('Crear Grupo') }}</a></th>
             </tr>
-            {{--
             <tr>
-                <th><a href="{{ route('') }}">{{ __('Ver Grupos') }}</a></th>
+                <th><a href="{{ route('abrirVerGrupos') }}">{{ __('Ver Grupos') }}</a></th>
             </tr>
-            --}}
             <tr>
                 <th><a href="{{ route('abrirAgregarAGrupo') }}">{{ __('Agregar a Grupo') }}</a></th>
             </tr>

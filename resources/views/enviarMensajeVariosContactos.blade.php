@@ -7,12 +7,14 @@
         <div class="derecha">
             <form action="{{ route('enviarMensajeVariosContactosRequest') }}">
                 @csrf
+                <label for="">{{ __('Contactos a los que desea enviar el mensaje') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="numeros[]" id="numeros"
                     class="form-control">
                 <input style="width: 400px; margin-top: 10px" type="text" name="numeros[]" id="numeros"
                     class="form-control">
                 <input style="width: 400px; margin-top: 10px" type="text" name="numeros[]" id="numeros"
                     class="form-control">
+                <label for="mensaje">{{ __('Mensaje que desea enviar') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="mensaje" id="mensaje"
                     class="form-control">
                 <input style="width: 400px; margin-top: 10px" class="btn btn-success" type="submit" value="Enviar Mensaje">

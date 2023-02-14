@@ -7,9 +7,12 @@
         <div class="derecha">
             <form action="{{ route('enviarImagenRequest') }}">
                 @csrf
+                <label for="numero">{{ __('Numero al que desea enviar la imagen') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="numero" id="numero" class="form-control">
+                <label for="url">{{ __('Link de la imagen que desea enviar') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="url" id="url"
                     class="form-control">
+                <label for="textoimagen">{{ __('Descripcion de la imagen') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="textoimagen" id="textoimagen"
                     class="form-control">
                 <input style="width: 400px; margin-top: 10px" class="btn btn-success" type="submit" value="Enviar Imagen">

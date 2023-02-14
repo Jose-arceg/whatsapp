@@ -7,7 +7,9 @@
         <div class="derecha">
             <form action="{{ route('enviarArchivoRequest') }}">
                 @csrf
+                <label for="numero">{{ __('Numero al que desea enviar un archivo') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="numero" id="numero" class="form-control">
+                <label for="url">{{ __('Link del archivo que se deseea enviar') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="url" id="url"
                     class="form-control">
                 <input style="width: 400px; margin-top: 10px" class="btn btn-success" type="submit" value="Enviar archivo">

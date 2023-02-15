@@ -2,6 +2,9 @@
     <table>
         <thead>
             <tr>
+                <th><a href="{{ route('abrirAgregarCliente') }}">{{ __('Agregar Cliente') }}</a></th>
+            </tr>
+            <tr>
                 <th><a href="{{ route('abrirVerContactos') }}">{{ __('Ver contactos') }}</a></th>
             </tr>
             <tr>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\clientes;
+
 class VistasController extends Controller
 {
 
@@ -45,5 +47,15 @@ class VistasController extends Controller
     public function abrirEnviarMensajeVariosContactos()
     {
         return view('enviarMensajeVariosContactos');
+    }
+    public function abrirEnviarMensajeVariosContactosc()
+    {
+        $clientes = clientes::all();
+        return view('enviarMensajeVariosContactosc')->with('clientes', $clientes);
+    }
+    public function abrirAgregarClientes()
+    {
+
+        return view('agregarClientes');
     }
 }

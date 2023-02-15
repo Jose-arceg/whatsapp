@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\VistasController;
 use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\WhatsAppRequestsController;
@@ -56,6 +57,8 @@ Route::get('/obtenerContactosRequest', [WhatsAppRequestsController::class, 'obte
 Route::get('/reiniciarInstancia', [WhatsAppController::class, 'reiniciarInstancia']);
 Route::get('/reiniciarInstanciaRequest', [WhatsAppRequestsController::class, 'reiniciarInstancia']);
 
+Route::get('/agregarCliente', [ClientesController::class, 'agregarCliente'])->name('agregarCliente');
+
 ##########################################################################################
 
 Route::get('/abrirEnviarMensaje', [VistasController::class, 'abrirEnviarMensaje'])->name('abrirEnviarMensaje');
@@ -67,6 +70,7 @@ Route::get('/abrirEnviarArchivo', [VistasController::class, 'abrirEnviarArchivo'
 Route::get('/abrirEnviarImagen', [VistasController::class, 'abrirEnviarImagen'])->name('abrirEnviarImagen');
 Route::get('/abrirEnviarBotones', [VistasController::class, 'abrirEnviarBotones'])->name('abrirEnviarBotones');
 Route::get('/abrirEnviarUbicacion', [VistasController::class, 'abrirEnviarUbicacion'])->name('abrirEnviarUbicacion');
-Route::get('/abrirEnviarMensajeVariosContactos', [VistasController::class, 'abrirEnviarMensajeVariosContactos'])->name('abrirEnviarMensajeVariosContactos');
+Route::get('/abrirEnviarMensajeVariosContactos', [VistasController::class, 'abrirEnviarMensajeVariosContactosc'])->name('abrirEnviarMensajeVariosContactos');
+Route::get('/abrirAgregarCliente', [VistasController::class, 'abrirAgregarClientes'])->name('abrirAgregarCliente');
 Route::get('/abrirVerGrupos', [WhatsAppRequestsController::class, 'obtenerGrupos'])->name('abrirVerGrupos');
 Route::get('/abrirVerContactos', [WhatsAppRequestsController::class, 'obtenerContactos'])->name('abrirVerContactos');

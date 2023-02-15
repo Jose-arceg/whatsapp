@@ -58,6 +58,8 @@ Route::get('/reiniciarInstancia', [WhatsAppController::class, 'reiniciarInstanci
 Route::get('/reiniciarInstanciaRequest', [WhatsAppRequestsController::class, 'reiniciarInstancia']);
 
 Route::get('/agregarCliente', [ClientesController::class, 'agregarCliente'])->name('agregarCliente');
+Route::get('/vincular', [WhatsAppRequestsController::class, 'vincular'])->name('vincular');
+Route::get('/cerrarSesion', [WhatsAppRequestsController::class, 'cerrarSesion'])->name('cerrarSesion');
 
 ##########################################################################################
 

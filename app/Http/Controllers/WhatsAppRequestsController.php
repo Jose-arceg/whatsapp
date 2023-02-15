@@ -85,15 +85,19 @@ class WhatsAppRequestsController extends Controller
 
     public function enviarMensaje(enviarMensajeRequest $request)
     {
-        dd($request);
-        $body = '{
-            "numero" : ' . $request->numero . ',
-            "mensaje": ' . $request->mensaje . '
-        }';
-        $grequest = new GRequest('POST', env('WSP_URL') . '/own/enviar-mensaje?token=' . env('WSP_API_TOKEN'), [], $body);
-        $res = $this->client->sendAsync($grequest)->wait();
-        $response = json_decode($res->getBody()->getContents());
-        dd($response);
+        $response = $this->client->request('POST', env('WSP_URL') . '/own/enviar-mensaje?token=' . env('WSP_API_TOKEN'), [
+
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Cache-Control' => 'no-cache',
+            ],
+            'json' => [
+                'numero' => $request->numero,
+                'mensaje' => $request->mensaje,
+            ],
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        dd($data);
     }
 
     public function enviarArchivo(enviarArchivoRequest $request)
@@ -176,38 +180,22 @@ class WhatsAppRequestsController extends Controller
 
     public function mensajeVariosContactos(enviarMensajeVariosContactosRequest $request)
     {
-        dd($request);
-        $body = '{
-        "numeros": ' . $request->nuneros . ',
-        "mensaje" : ' . $request->mensaje . '
-        }';
-        $grequest = new GRequest('POST', env('WSP_URL') . '/own/enviar-mensaje-muchos-contactos?token=' . env('WSP_API_TOKEN'), [], $body);
-        $res = $this->client->sendAsync($grequest)->wait();
-        $response = json_decode($res->getBody()->getContents());
-        dd($response);
+        $response = $this->client->request('POST', env('WSP_URL') . '/own/enviar-mensaje-muchos-contactos?token=' . env('WSP_API_TOKEN'), [
+
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Cache-Control' => 'no-cache',
+            ],
+            'json' => [
+                'numeros' => $request->numeros,
+                'mensaje' => $request->mensaje,
+            ],
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        //devuelve exito: true
+        dd($data);
     }
-    /*
-    public function muchosMensajesMuchosContactos(Request $request)
-    {
-    $client = new Client();
-    $body = '{
-    "contactos" :
-    [
-    [5213344556688,"Bety"," 70 USD"," 18 de Noviembre del 2022"  ],
-    [5213344556688,"Gerardo"," 35 USD"," 2 de Diciembre del 2022"  ],
-    [5213344556688,"Lupita","60 USD"," 7 de Diciembre del 2022"  ],
-    [5213344556688,"Erick"," 40 USD"," 23 de Noviembre del 2022"  ]
-    ]
-    ,
-    "mensaje" : "Hola %1 enviar-muchos-mensajes-muchos-contactos 👋, soy Fernando tu asesor de Mi Empresa espero te encuentres muy bien, además de saludarte te recuerdo que tienes un pago que realizar 😯 por la cantidad de %2 y lo tienes que realizar antes del %3 👍, cualquier duda estoy a tus ordenes, WhatzMeApi.com",
-    "webhookUrl" : "URL Opcional para que te notifiquetemos por POST cuando termina el envio",
-    "nombreCampania" : "Opcional si deseas que se registren los resultados de tu envio en el /dashboard"
-    }';
-    $grequest = new GRequest('POST', '{{produccionserver}}/own/enviar-muchos-mensajes-muchos-contactos?token=' . env('WSP_API_TOKEN'), [], $body);
-    $res = $client->sendAsync($grequest)->wait();
-    echo $res->getBody();
-    }
-     */
+
     public function obtenerContactos()
     {
         $grequest = new GRequest('GET', env('WSP_URL') . '/own/contactos?token=' . env('WSP_API_TOKEN'));
@@ -222,5 +210,35 @@ class WhatsAppRequestsController extends Controller
         $grequest = new GRequest('GET', env('WSP_URL') . '/own/reiniciar-instancia?token=' . env('WSP_API_TOKEN'));
         $res = $this->client->sendAsync($grequest)->wait();
         echo $res->getBody();
+    }
+
+    public function vincular()
+    {
+        $response = $this->client->request('GET', env('WSP_URL') . '/own/pantalla?token=' . env('WSP_API_TOKEN'), [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Cache-Control' => 'no-cache',
+            ],
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        //devuelve status code 200
+    }
+
+    public function cerrarSesion()
+    {
+        $request = new GRequest('POST', env('WSP_URL') . '/own/cerrar-sesion?token=' . env('WSP_API_TOKEN'));
+        $res = $this->client->sendAsync($request)->wait();
+        $data = json_decode($res->getBody()->getContents());
+        dd($data);
+        /*
+    $response = $this->client->request('POST', env('WSP_URL') . '/own/cerrar-sesion?token=' . env('WSP_API_TOKEN'), [
+    'headers' => [
+    'Content-Type' => 'application/json',
+    'Cache-Control' => 'no-cache',
+    ],
+    ]);
+    $data = json_decode($response->getBody()->getContents());
+    //devuelve exito: true
+     */
     }
 }

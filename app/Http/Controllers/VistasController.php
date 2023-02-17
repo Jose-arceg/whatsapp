@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\clientes;
+use Illuminate\Http\Request;
 
 class VistasController extends Controller
 {
-
+    private $client;
     public function __construct()
     {
-
+        $this->client = new \GuzzleHttp\Client();
     }
     public function abrirEnviarMensaje()
     {
@@ -58,5 +59,30 @@ class VistasController extends Controller
     {
 
         return view('agregarClientes');
+    }
+    public function abrirObtenerMensajes()
+    {
+        $response = $this->client->request('GET', env('WSP_URL') . '/own/mensajes?token=' . env('WSP_API_TOKEN'), [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Cache-Control' => 'no-cache',
+            ],
+        ]);
+
+        $data = json_decode($response->getBody()->getContents());
+        return view('ObtenerMensajes')->with('data', $data);
+    }
+
+    public function abrirObtenerMensajes1()
+    {
+        $response = $this->client->request('GET', env('WSP_URL') . '/own/mensajes?token=' . env('WSP_API_TOKEN') . '&ultimoMensaje=100', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Cache-Control' => 'no-cache',
+            ],
+        ]);
+
+        $data = json_decode($response->getBody()->getContents());
+        return view('ObtenerMensajes1')->with('data', $data);
     }
 }

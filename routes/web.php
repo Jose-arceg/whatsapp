@@ -76,3 +76,5 @@ Route::get('/abrirEnviarMensajeVariosContactos', [VistasController::class, 'abri
 Route::get('/abrirAgregarCliente', [VistasController::class, 'abrirAgregarClientes'])->name('abrirAgregarCliente');
 Route::get('/abrirVerGrupos', [WhatsAppRequestsController::class, 'obtenerGrupos'])->name('abrirVerGrupos');
 Route::get('/abrirVerContactos', [WhatsAppRequestsController::class, 'obtenerContactos'])->name('abrirVerContactos');
+Route::get('/abrirObtenerMensajes', [VistasController::class, 'abrirObtenerMensajes'])->name('abrirObtenerMensajes');
+Route::get('/abrirObtenerMensajes1', [VistasController::class, 'abrirObtenerMensajes1'])->name('abrirObtenerMensajes1');

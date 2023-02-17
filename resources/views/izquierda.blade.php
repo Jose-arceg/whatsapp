@@ -8,6 +8,12 @@
                 <th><a href="{{ route('cerrarSesion') }}">{{ __('Cerrar sesion') }}</a></th>
             </tr>
             <tr>
+                <th><a href="{{ route('abrirObtenerMensajes') }}">{{ __('Ver mensajes') }}</a></th>
+            </tr>
+            <tr>
+                <th><a href="{{ route('abrirObtenerMensajes1') }}">{{ __('Ver mensajes especificos') }}</a></th>
+            </tr>
+            <tr>
                 <th><a href="{{ route('abrirAgregarCliente') }}">{{ __('Agregar Cliente') }}</a></th>
             </tr>
             <tr>

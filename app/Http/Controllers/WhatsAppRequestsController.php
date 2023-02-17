@@ -8,7 +8,6 @@ use App\Http\Requests\eliminarDeGrupoRequest;
 use App\Http\Requests\enviarArchivoRequest;
 use App\Http\Requests\enviarImagenRequest;
 use App\Http\Requests\enviarMensajeAGrupoRequest;
-use App\Http\Requests\enviarMensajeRequest;
 use App\Http\Requests\enviarMensajeVariosContactosRequest;
 use GuzzleHttp\Psr7\Request as GRequest;
 use Illuminate\Http\Request;
@@ -83,8 +82,18 @@ class WhatsAppRequestsController extends Controller
         dd($response);
     }
 
-    public function enviarMensaje(enviarMensajeRequest $request)
+    public function enviarMensaje(Request $request)
     {
+
+        $telefono = $request->numero;
+
+        $telefono = str_replace([' ', '+'], '', $telefono);
+        if (strlen($telefono) == 9) {
+
+            $telefono = '56' . $telefono;
+        } else if (strlen($telefono) == 8) {
+            $telefono = '569' . $telefono;
+        }
         $response = $this->client->request('POST', env('WSP_URL') . '/own/enviar-mensaje?token=' . env('WSP_API_TOKEN'), [
 
             'headers' => [
@@ -92,12 +101,13 @@ class WhatsAppRequestsController extends Controller
                 'Cache-Control' => 'no-cache',
             ],
             'json' => [
-                'numero' => $request->numero,
+                'numero' => $telefono,
                 'mensaje' => $request->mensaje,
             ],
         ]);
         $data = json_decode($response->getBody()->getContents());
         dd($data);
+        return redirect()->back();
     }
 
     public function enviarArchivo(enviarArchivoRequest $request)

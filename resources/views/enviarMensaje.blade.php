@@ -8,13 +8,12 @@
             <form action="{{ route('enviarMensajeRequest') }}">
                 @csrf
                 <label for="numero">{{ __('Numero al que desea enviar el mensaje') }}</label>
-                <input style="width: 400px; margin-top: 10px" type="text" name="numero" id="numero"
-                    class="form-control @error('numero') is-invalid @enderror">
-                @error('numero')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+                <select name="numero" id="numero" class="form-control" required >
+                    <option value="">---Selecciona los clientes---</option>
+                    @foreach ($clientes as $cliente)
+                        <option value="{{ $cliente->numero }}">{{ $cliente->nombre }}</option>
+                    @endforeach
+                </select>
                 <label for="mensaje">{{ __('Mensaje que desea enviar') }}</label>
                 <input style="width: 400px; margin-top: 10px" type="text" name="mensaje" id="mensaje"
                     class="form-control @error('mensaje') is-invalid @enderror">

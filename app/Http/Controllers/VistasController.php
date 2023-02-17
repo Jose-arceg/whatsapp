@@ -13,7 +13,8 @@ class VistasController extends Controller
     }
     public function abrirEnviarMensaje()
     {
-        return view('enviarMensaje');
+        $clientes = clientes::all();
+        return view('enviarMensaje')->with('clientes', $clientes);
     }
     public function abrirCrearGrupo()
     {

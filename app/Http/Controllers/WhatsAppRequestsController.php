@@ -232,6 +232,7 @@ class WhatsAppRequestsController extends Controller
         ]);
         $data = json_decode($response->getBody()->getContents());
         //devuelve status code 200
+        dd($data);
     }
 
     public function cerrarSesion()

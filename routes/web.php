@@ -78,3 +78,4 @@ Route::get('/abrirVerGrupos', [WhatsAppRequestsController::class, 'obtenerGrupos
 Route::get('/abrirVerContactos', [WhatsAppRequestsController::class, 'obtenerContactos'])->name('abrirVerContactos');
 Route::get('/abrirObtenerMensajes', [VistasController::class, 'abrirObtenerMensajes'])->name('abrirObtenerMensajes');
 Route::get('/abrirObtenerMensajes1', [VistasController::class, 'abrirObtenerMensajes1'])->name('abrirObtenerMensajes1');
+Route::get('/sincronizarMensajes', [VistasController::class, 'sincronizarMensajes'])->name('sincronizarMensajes');

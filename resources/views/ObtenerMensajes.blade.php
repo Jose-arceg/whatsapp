@@ -18,16 +18,14 @@
             </thead>
             <tbody>
                 @foreach ($data->mensajes as $men)
-                    @if ($men->autor == 525614816992)
-                        <tr>
-                            <td>
-                                {{ $men->autor }}
-                            </td>
-                            <td>
-                                {{ $men->texto }}
-                            </td>
-                        </tr>
-                    @endif
+                    <tr>
+                        <td>
+                            {{ $men->autor }}
+                        </td>
+                        <td>
+                            {{ $men->texto }}
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

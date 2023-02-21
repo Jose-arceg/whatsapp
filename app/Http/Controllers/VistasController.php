@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\clientes;
+use App\Models\Mensajes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VistasController extends Controller
 {
@@ -62,7 +64,7 @@ class VistasController extends Controller
     }
     public function abrirObtenerMensajes()
     {
-        $response = $this->client->request('GET', env('WSP_URL') . '/own/mensajes?token=' . env('WSP_API_TOKEN'), [
+        $response = $this->client->request('GET', env('WSP_URL') . '/own/mensajes?token=' . env('WSP_API_TOKEN') . '&ultimoMensaje=400', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Cache-Control' => 'no-cache',
@@ -70,12 +72,18 @@ class VistasController extends Controller
         ]);
 
         $data = json_decode($response->getBody()->getContents());
+
         return view('ObtenerMensajes')->with('data', $data);
     }
 
+    private $mensajes = [];
+    private $desde = 0;
     public function abrirObtenerMensajes1()
     {
-        $response = $this->client->request('GET', env('WSP_URL') . '/own/mensajes?token=' . env('WSP_API_TOKEN') . '&ultimoMensaje=100', [
+        if ($this->desde == 0) {
+            $this->mensajes = [];
+        }
+        $response = $this->client->request('GET', env('WSP_URL') . '/own/mensajes?token=' . env('WSP_API_TOKEN') . '&ultimoMensaje=' . $this->desde, [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Cache-Control' => 'no-cache',
@@ -83,6 +91,67 @@ class VistasController extends Controller
         ]);
 
         $data = json_decode($response->getBody()->getContents());
-        return view('ObtenerMensajes1')->with('data', $data);
+
+        $this->mensajes = array_merge($this->mensajes, $data->mensajes);
+        
+        if (count($data->mensajes, 0) > 90) {
+            $this->desde += 100;
+            $this->abrirObtenerMensajes1();
+        } else {
+            $this->desde = 0;
+        }
+        dd($this->mensajes);
+        return view('ObtenerMensajes1')->with('mensajes', $this->mensajes);
+    }
+
+    private $mensajes1 = [];
+    private $desde1 = 0;
+    public function obtenerMensajes()
+    {
+        if ($this->desde1 == 0) {
+            $mensajes1 = [];
+        }
+        $response = $this->client->request('GET', env('WSP_URL') . '/own/mensajes?token=' . env('WSP_API_TOKEN') . '&ultimoMensaje=' . $this->desde1, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Cache-Control' => 'no-cache',
+            ],
+        ]);
+
+        $data = json_decode($response->getBody()->getContents());
+
+        $this->mensajes1 = array_merge($this->mensajes1, $data->mensajes);
+
+        if (count($data->mensajes, 0) == 100) {
+            $this->desde1 += 100;
+            $this->abrirObtenerMensajes1();
+        } else {
+            $this->desde1 = 0;
+        }
+    }
+
+    public function sincronizarMensajes()
+    {
+        $existe = "";
+        $this->obtenerMensajes();
+        $mensajes = $this->mensajes1;
+        $this->mensajes1 = [];
+        $clientes = Clientes::all();
+        foreach ($clientes as $cli) {
+            foreach ($mensajes as $mensaje) {
+                if ($cli->numero == $mensaje->autor) {
+                    $existe = Mensajes::where('texto', $mensaje->texto)->where('telefono', $cli->numero)->where('id_api', $mensaje->id)->first();
+                    if (!$existe) {
+                        DB::table('mensajes')->insert([
+                            'telefono' => $cli->numero,
+                            'texto' => $mensaje->texto,
+                            'id_api' => $mensaje->id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
+                    }
+                }
+            }
+        }
     }
 }

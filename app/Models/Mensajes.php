@@ -12,5 +12,6 @@ class Mensajes extends Model
     protected $fillable = [
         'telefono',
         'mensaje',
+        'id_api',
     ];
 }

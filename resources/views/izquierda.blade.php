@@ -4,7 +4,6 @@
             <tr>
                 <th><a href="{{ route('vincular') }}">{{ __('Vincular') }}</a></th>
             </tr>
-
             <tr>
                 <th><a href="{{ route('cerrarSesion') }}">{{ __('Cerrar sesion') }}</a></th>
             </tr>
@@ -53,6 +52,10 @@
             <tr>
                 <th>
                     <a href="https://meet.google.com/new">{{ __('Generar videollamada') }}</a>
+                </th>
+            </tr>
+            <tr>
+                <th><a href="{{ route('guardarMensajes') }}">{{ __('Guardar Mensajes') }}</a>
                 </th>
             </tr>
         </thead>

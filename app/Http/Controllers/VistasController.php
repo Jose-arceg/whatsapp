@@ -93,7 +93,7 @@ class VistasController extends Controller
         $data = json_decode($response->getBody()->getContents());
 
         $this->mensajes = array_merge($this->mensajes, $data->mensajes);
-        
+
         if (count($data->mensajes, 0) > 90) {
             $this->desde += 100;
             $this->abrirObtenerMensajes1();
@@ -153,5 +153,42 @@ class VistasController extends Controller
                 }
             }
         }
+    }
+
+    private $from = 0;
+    public function guardarMensajes()
+    {
+        $response = $this->client->request('GET', env('WSP_URL') . '/own/mensajes?token=' . env('WSP_API_TOKEN') . '&ultimoMensaje=' . $this->from, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Cache-Control' => 'no-cache',
+            ],
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        $mensajes = $data->mensajes;
+        $clientes = Clientes::all();
+        foreach ($clientes as $cli) {
+            foreach ($mensajes as $mensaje) {
+                if ($cli->numero == $mensaje->autor) {
+                    $existe = Mensajes::where('texto', $mensaje->texto)->where('telefono', $cli->numero)->where('id_api', $mensaje->id)->first();
+                    if (!$existe) {
+                        DB::table('mensajes')->insert([
+                            'telefono' => $cli->numero,
+                            'texto' => $mensaje->texto,
+                            'id_api' => $mensaje->id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
+                    }
+                }
+            }
+        }
+        if (count($mensajes, 0) == 100) {
+            $this->from += 100;
+            $this->guardarMensajes();
+        } else {
+            $this->from = 0;
+        }
+        return back();
     }
 }
